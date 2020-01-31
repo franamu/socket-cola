@@ -2,7 +2,6 @@ const { io } = require("../server");
 const { TicketControl } = require("../classes/ticket-control");
 
 const ticketControl = new TicketControl();
-console.log(ticketControl);
 
 io.on("connection", client => {
   console.log("Usuario conectado");
@@ -13,7 +12,8 @@ io.on("connection", client => {
   });
 
   client.emit("estadoActual", {
-    actual: ticketControl.getUltimoTicket()
+    actual: ticketControl.getUltimoTicket(),
+    ultimos4: ticketControl.getUltimos4()
   });
 
   client.on("disconnect", () => {
@@ -36,5 +36,9 @@ io.on("connection", client => {
 
     let antenderTicket = ticketControl.atenderTicket(data.escritorio);
     callback(antenderTicket);
+
+    client.broadcast.emit("ultimos4", {
+      ultimos4: ticketControl.getUltimos4()
+    });
   });
 });

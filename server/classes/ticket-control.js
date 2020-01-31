@@ -1,9 +1,9 @@
 const fs = require("fs");
 
 class Ticket {
-  constructor(numero, escritrio) {
+  constructor(numero, escritorio) {
     this.numero = numero;
-    this.escritrio = escritrio;
+    this.escritorio = escritorio;
   }
 }
 
@@ -37,6 +37,10 @@ class TicketControl {
     return `Ticket ${this.ultimo}`;
   }
 
+  getUltimos4() {
+    return this.ultimos4;
+  }
+
   atenderTicket(escritorio) {
     if (this.tickets.length === 0) {
       return "No hay tickets";
@@ -49,7 +53,7 @@ class TicketControl {
 
     this.ultimos4.unshift(atenderTicket);
 
-    if (this.ultimos4.lenght > 4) {
+    if (this.ultimos4.length > 4) {
       this.ultimos4.splice(-1, 1); // borra el último elemento
     }
 
